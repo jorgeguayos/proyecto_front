@@ -11,6 +11,7 @@ import { AccountService } from 'src/app/services/account.service';
 export class RegisterComponent  implements OnInit {
 
   constructor(private router:Router, private fb:FormBuilder, private accountService:AccountService) { }
+  
     registerForm =this.fb.group({
       email: new FormControl('',[Validators.required,Validators.email]),
       password: new FormControl('',[Validators.required,Validators.pattern('^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,}$')]),

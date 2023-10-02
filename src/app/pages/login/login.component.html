@@ -11,12 +11,14 @@
     <ion-card-header>
       <ion-card-title>Sistema de registro de movilidad laboral</ion-card-title>
     </ion-card-header>
-    <form>
+    <form [formGroup]="loginForm"(submit)="submitLoginForm()">
       <ion-input
        label="Email"
        type="email"
         label-placement="floating" 
         fill="outline" 
+        formControlName="email"
+        errorText="El email es requerido y debe ser validado"
         placeholder="Ingrese su email">
       </ion-input>
       <br>
@@ -25,10 +27,15 @@
       type="password"
        label-placement="floating" 
        fill="outline" 
+       formControlName="password"
+       errorText="La contraseña es requerida,debe tener al menos 8 caracteres y  un numero,una letra mayuscula y una minuscula "
        placeholder="Ingrese su contraseña">
       </ion-input>
       <br>
-      <ion-button expand="block">Ingresar</ion-button>
+      <ion-button
+       type="submit" 
+       [disabled]="!loginForm.valid" 
+       expand="block">Ingresar</ion-button>
       <br>
       <ion-button (click)="toRegister()"  expand="block">Registrarse</ion-button>
       <br>
