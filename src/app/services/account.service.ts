@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 const URL = environment.API_URL;
@@ -9,7 +10,7 @@ const URL = environment.API_URL;
 })
 export class AccountService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
 
   register(userCredentials:any){
 
@@ -27,5 +28,25 @@ export class AccountService {
 loginUser(userCredentials:any){
   return this.http.post(`${URL}/api/account/login`, userCredentials);
    
+ }
+ checkToken(){
+   let token = localStorage.getItem('token');
+   if(!token){
+      this.router.navigate(['/']);
+      return;
+   }
+   const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+   });
+   this.http.get(`${URL}/api/account/user`,{headers}).subscribe({
+   next: (resp:any)=>{
+    if(!resp.ok){
+      this.router.navigate(['/']);
+    }
+   },
+   error:err=>{
+    this.router.navigate(['/']);
+   }
+   })
  }
 }

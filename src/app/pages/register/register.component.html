@@ -40,6 +40,9 @@
          formControlName="confirmPassword"
          placeholder="Repita su contraseña">
         </ion-input>
+        <div *ngIf="registerForm.errors?.['passwordMismatch']">
+          <ion-text color="danger">las contraseñas no coinciden</ion-text>
+          </div>
         <br>
         <ion-button
         type="submit"
